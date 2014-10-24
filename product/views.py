@@ -10,6 +10,10 @@ from django.views.decorators.csrf import csrf_exempt
 import settings
 import os
 import json
+import sys
+import string
+reload(sys) 
+sys.setdefaultencoding("utf8")
 # #导入数据model
 from django.contrib.auth.models import User  #用户表
 from backend.models import adminInfo         #继承User表
@@ -22,13 +26,13 @@ from django.contrib.auth.hashers import make_password, check_password
 from product.form import UEditorForm
 #导入分页
 from django.core.paginator import Paginator,InvalidPage,EmptyPage
-from datetime import *
+import datetime
 
 #---------------------------------------------------
 #      名字 ： 分页公共函数
 #      功能 :  实现分页
 #      人员 ： 杨凯
-#      日期 ： 2014.08.27
+#      日期 ： 2014.10.20
 #  all_list :  传递需要分页的 数据
 #       num :  传递每页显示的
 #---------------------------------------------------
@@ -320,8 +324,8 @@ def del_product(request):
 # ======================================
 # 	名字：资讯修改页面
 #   功能：修改页面显示资讯
-#   人员：黄晓佳
-#   日期：2014.08.25
+#   人员：杨凯
+#   日期：2014.10.24
 # --------------------------------------
 def product_edit(request, template_name):
 	if request.method == "GET":
@@ -364,15 +368,13 @@ def product_edit(request, template_name):
 # ======================================
 # 	名字：资讯修改表单处理
 #   功能：修改表单
-#   人员：黄晓佳
-#   日期：2014.08.25
+#   人员：杨凯
+#   日期：2014.10.24
 # --------------------------------------
 @csrf_exempt
 def product_edit_handle(request):
 	if request.method == "POST":
 		ids = request.POST.get('id','')
-		print '*'*100
-		print ids
 		p_id  = request.POST.get('p_id','')
 		s_id  = request.POST.get('s_id','')
 		t_id  = request.POST.get('t_id','0')
@@ -392,38 +394,57 @@ def product_edit_handle(request):
 			is_hot = False
 		if not is_new:
 			is_new = False
+		if not is_none:
+			is_none = False
 		is_size = ''
 		#是否选择尺寸  有		
 		if size:
 			for i in size:
 				is_size += i + ','    #以 ',' 分割,组合成字符串
+		print is_size
 		is_color = ''
 		#是否选择颜色  有		
 		if color:
 			for i in color:
 				is_color += i + ','    #以 ',' 分割,组合成字符串
-
+		print is_color
 		# 如果没有上传图片
 		if not photo:
 			photo = hiddenImg
-
 		# 保存修改
-		p = Product.objects.get(id = ids)
-		p.p_id = p_id,
-		p.s_id = s_id,
-		p.t_id = t_id,
-		p.name = name,
-		p.photo = photo,
-		p.price = price,
-		p.key_words = key_words,
-		p.is_hot = is_hot,
-		p.is_new = is_new,
-		p.is_none = is_none,
-		p.brands = brands,
-		p.color  = is_color,
-		p.size   = is_size,
-		p.content = content,
-		p.save()
+		product = Product.objects.get(id = ids)
+		product.p_id = p_id
+		product.s_id = s_id
+		product.t_id = t_id
+		product.name = name
+		product.photo = photo
+		product.price = price
+		product.key_words = key_words
+		product.is_hot = is_hot
+		product.is_new = is_new
+		product.is_none = is_none
+		product.brands = brands
+		product.color  = is_color
+		product.size   = is_size
+		product.content = content
+		product.datetime = datetime.datetime.now().strftime("%Y-%m-%d %H:%I:%S")
+		product.save()
+				# p.save(
+		# 	p_id = p_id,
+		# 	s_id = s_id,
+		# 	t_id = t_id,
+		# 	name = name,
+		# 	photo = photo,
+		# 	price = price,
+		# 	key_words = key_words,
+		# 	is_hot = is_hot,
+		# 	is_new = is_new,
+		# 	is_none = is_none,
+		# 	brands = brands,
+		# 	color  = is_color,
+		# 	size   = is_size,
+		# 	content = content,
+		# 	)
 
 		return render(request, "backend_href.html", {'title':"修改成功 :)", 'href':'product'})
 	else:

@@ -19,7 +19,10 @@ from backend.form import loginForm,adminForm
 
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.hashers import make_password, check_password
-
+import sys
+import string
+reload(sys) 
+sys.setdefaultencoding("utf8")
 # #导入分页
 # from django.core.paginator import Paginator,InvalidPage,EmptyPage
 # from datetime import *
@@ -194,6 +197,8 @@ def navigation_edit_handle(request):
 		ids = request.POST['id']
 		name = request.POST['name']
 		navs = Shoes_type.objects.get(id = ids)
+		print '*'*100
+		print navs
 		navs.name = name
 		navs.save()
 		return render(request, "backend_href.html", {'title':'修改成功 :)', 'href':'navigation'})
