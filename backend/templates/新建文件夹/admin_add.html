@@ -1,0 +1,98 @@
+{% extends "backend_base.html" %}
+
+{% block title1 %}添加管理员{% endblock %}
+{% block title2 %}添加管理员{% endblock %}
+{% block title3 %}添加管理员{% endblock %}
+{% block titleBase %}用户管理{% endblock %}
+{% block titleBaseUrl %}admin_list{% endblock %}
+{% block content %}
+    <!-- 添加管理员 开始 -->
+    <section id="main" class="column">
+        <div class="clear"></div>
+        <article class="module width_full add_item_block">
+            <form method="post" name="form">
+                {% csrf_token %}
+                <header>
+                    <h3 class="form_title">添加管理员</h3>
+                </header>
+                {% if form.errors %}
+                    <p style="color: red;">
+                        <strong>对不起，添加失败</strong>
+                    </p>
+                {% endif %}
+                <div class="module_content">
+                    <fieldset style="width:40%;float:left;margin-bottom:20px;">
+                        <label>账号</label>
+                        <input type="text" name="username" class="title" style="height:25px;">
+                        {{form.errors.username}}                 
+                    </fieldset>
+                    <fieldset style="width:40%;clear:both;margin-bottom:20px;">
+                        <label>管理员姓名</label>
+                        <input type="text" name="first_name" class="title" style="height:25px;">
+                        {{form.errors.first_name}}     
+                    </fieldset>
+                    <fieldset style="width:40%;clear:both;margin-bottom:20px;">
+                        <label>密码</label>
+                        <input type="password" name="password" class="title" style="height:25px;">
+                         {{form.errors.password}}
+                    </fieldset>
+                    <fieldset style="width:40%;clear:both;margin-bottom:20px;">
+                        <label>再次密码</label>
+                        <input type="password" name="password2" class="title" style="height:25px;">
+                        {{form.errors.password2}}
+                    </fieldset>
+                    <fieldset style="width:40%;clear:both;margin-bottom:20px;">
+                        <label>权限设置</label>
+                        <div style="float:left;margin:0 10px;">
+                            <input type="checkbox" name="premissions" value="1"> 导航管理&nbsp;
+                            <input type="checkbox" name="premissions" value="2"> 产品管理&nbsp;
+                            <input type="checkbox" name="premissions" value="3"> 工程管理&nbsp;
+                            <input type="checkbox" name="premissions" value="4"> 资讯管理&nbsp;<br>
+                            <input type="checkbox" name="premissions" value="5"> 招聘管理&nbsp;
+                            <input type="checkbox" name="premissions" value="6"> 留言管理&nbsp;
+                            <input type="checkbox" name="premissions" value="7"> 产品优势管理
+                        </div>
+                    </fieldset>
+                </div>
+                <footer>
+                    <div class="submit_link">
+                        <input type="submit" value="添加" class="alt_btn">
+                    </div>
+                </footer>
+            </form>
+        </article>
+        <div class="spacer"></div>
+    </section>
+    <!-- 添加管理员 结束 -->
+
+    <!-- 权限判断 开始 -->
+    <script type="text/javascript">
+    $(function(){
+        $('.alt_btn').click(function(){
+            var length = 0;
+            var checkbox = $("input[name='premissions']");
+            for (var i = 0; i < checkbox.length; i++) {
+                if (checkbox[i].checked == true)
+                    length++;
+            };
+
+            if (length>0){
+                // 输入框不能为空
+                if ($("input[name='username']").val().length <= 0 
+                    || $("input[name='first_name']").val().length <= 0
+                    || $("input[name='password']").val().length <= 0
+                    || $("input[name='password2']").val().length <= 0) {
+                    alert("资料不能为空");
+                    return false;
+                }
+                form.action = "/backend/user_add_handle/";
+            } 
+            else {
+                alert("请选择权限");
+                return false;
+            }
+        });
+    });
+    </script>
+    <!-- 权限判断 结束 -->
+{% endblock %}

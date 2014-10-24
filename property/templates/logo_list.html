@@ -1,0 +1,25 @@
+ <table class="tablesorter" cellspacing="0">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>品牌名称</th>
+            <!-- <th>颜色RGB</th> -->
+            <th>操作</th>
+        </tr>
+    </thead>
+   
+    <tbody>
+     {% for list in logoList %} 
+        <tr>
+            <td>{{list.id}}</td>
+            <td>{{list.name}}</td>
+            <!-- <td>{{list.color}}</td> -->
+            <td>
+                <a href="/backend/del_logo/?id={{list.id}}">
+                    删除
+                </a>
+            </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+</table>

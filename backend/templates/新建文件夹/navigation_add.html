@@ -1,0 +1,58 @@
+{% extends "backend_base.html" %}
+
+{% block style %}
+    <!-- ueditor编辑器js与css -->
+    {{ form.media }}
+{% endblock %}
+{% block title1 %}添加导航{% endblock %}
+{% block title2 %}添加导航{% endblock %}
+{% block title3 %}添加导航{% endblock %}
+{% block titleBase %}导航管理{% endblock %}
+{% block titleBaseUrl %}navigation_list{% endblock %}
+{% block content %}
+    <!-- 添加导航板块 开始 -->
+    <section id="main" class="column">
+        <div class="clear"></div>
+        <article class="module width_full add_item_block">
+            <form method="post" name="form">
+                <header>
+                    <h3 class="form_title">添加导航</h3>
+                </header>
+                <div class="module_content">
+                    <fieldset style="width:30%;clear:both; margin-bottom:50px;margin-top:50px">
+                        <label>子导航导航名称</label>
+                        <input type="text" name="name" class="title" style="height:25px;">
+                    </fieldset>  
+                    <fieldset style="width:30%;clear:both; margin-bottom:50px;margin-top:50px">
+                        <label>子导航导航名称（英文）</label>
+                        <input type="text" name="name_en" class="title" style="height:25px;">
+                    </fieldset>  
+                </div>
+                <footer>
+                    <div class="submit_link">
+                        <input type="hidden" value="{{id}}" name="id" />
+                        <input type="submit" value="添加" class="alt_btn" />
+                    </div>
+                </footer>
+            </form>
+        </article>
+        <div class="spacer"></div>
+    </section>
+    <!-- 添加导航板块 结束 -->
+
+    <!-- 标题不能为空 开始 -->
+    <script type="text/javascript">
+    $(function(){
+        $('.alt_btn').click(function(){
+            if ($.trim($(".title").val()).length<=0) {
+                alert('内容不能为空');
+                return false;
+            }
+            else {
+                form.action = "/backend/navigation_add_handle/";
+            }
+        });
+    });
+    </script>
+    <!-- 标题不能为空 结束 -->
+{% endblock %}

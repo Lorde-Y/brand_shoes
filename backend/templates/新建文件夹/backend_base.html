@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <title>后台管理 | {% block title1 %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/layout.css" type="text/css" media="screen" />
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/static/js/jquery-1.11.0.js"></script>
+    <script src="/static/js/backend.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/toast.js"></script>
+    <script src="/static/js/jquery.tablesorter.min.js"></script>
+    {% block style %}{% endblock %}
+</head>
+
+<body>
+    <!-- 头部栏目 开始 -->
+    <header id="header">
+        <hgroup>
+            <h1 class="site_title">
+                <a href="/backend/home/">后台管理</a>
+            </h1>
+            <h2 class="section_title">{% block title2 %}{% endblock %}</h2>
+            <div class="btn_view_site">
+                <a href="/backend/login_out/">注销登录</a>
+            </div>
+        </hgroup>
+    </header>
+    <!-- 头部栏目 结束 -->
+
+    <!-- 头部小栏目 开始 -->
+    <section id="secondary_bar">
+        <div class="user">
+            <p>
+                欢迎管理员 : {% if user.is_authenticated %}{{user.username}}{% endif %}&nbsp;
+                <a href="/backend/admin_changePwd/" style="color:#696f6f">[更改密码]</a>
+            </p>
+        </div>
+        <div class="breadcrumbs_container">
+            <article class="breadcrumbs">
+                <a href="/backend/{% block titleBaseUrl %}{% endblock %}/">
+                    {% block titleBase %}{% endblock %}
+                </a>
+                <div class="breadcrumb_divider"></div>
+                <a class="current">{% block title3 %}{% endblock %}</a>
+            </article>
+        </div>
+    </section>
+    <!-- 头部小栏目 结束 -->
+
+    <!-- 左边栏目 开始 -->
+    <aside id="sidebar">
+       
+        <h3>导航管理</h3>
+        <ul class="toggle">
+            <li class="icn_categories"><a href="/backend/navigation_list/" class="link">导航列表</a>
+            </li>
+        </ul>
+
+        <h3>佳易得产品管理</h3>
+        <ul class="toggle">
+            <li class="icn_categories"><a href="/backend/product_list/" class="link">产品列表</a>
+            </li>
+            <li class="icn_new_article"><a href="/backend/product_add/" class="link">添加产品</a>
+            </li>
+        </ul>
+       
+        <h3>工程应用管理</h3>
+        <ul class="toggle">
+            <li class="icn_categories"><a href="/backend/project_list/" class="link">工程列表</a>
+            </li>
+            <li class="icn_photo"><a href="/backend/project_add/" class="link">添加工程</a>
+            </li>
+        </ul>
+
+        <h3>资讯管理</h3>
+        <ul class="toggle">
+            <li class="icn_categories"><a href="/backend/info_list/" class="link">资讯列表</a>
+            </li>
+            <li class="icn_edit_article"><a href="/backend/info_add/" class="link">添加资讯</a>
+            </li>
+        </ul>
+
+        <h3>招聘管理</h3>
+        <ul class="toggle">
+            <li class="icn_categories"><a href="/backend/job_list/" class="link">招聘列表</a>
+            </li>
+            <li class="icn_jump_back"><a href="/backend/job_publish/" class="link">发布招聘</a>
+            </li>
+        </ul>
+
+        <h3>留言管理</h3>
+        <ul class="toggle">
+            <li class="icn_categories"><a href="/backend/message_list/" class="link">留言列表</a>
+            </li>
+        </ul>
+
+        <h3>产品优势管理</h3>
+        <ul class="toggle">
+            <li class="icn_categories"><a href="/backend/advantages_list/" class="link">产品优势列表</a>
+            </li>
+        </ul>
+
+        <h3>账户管理</h3>
+        <ul class="toggle">
+            <li class="icn_add_user"><a href="/backend/admin_add/" class="link">添加管理员</a>
+            </li>
+            <li class="icn_view_users"><a href="/backend/admin_list/" class="link">管理员列表</a>
+            </li>
+        </ul>
+
+        <footer>
+            <hr />
+            <p>
+                <strong>Copyright &copy; 2014 深圳德厚科技有限公司</strong>
+            </p>
+        </footer>
+    </aside>
+    <!-- 左边栏目 结束 -->
+
+    <!-- 主体板块 开始 -->
+    {% block content %}{% endblock %}
+    <!-- 主体板块 结束 -->
+
+</body>
+<script type="text/javascript">
+// 设置当前样式
+$(document).ready(function() {
+    var strUrl = window.location.href;
+    var arrUrl = strUrl.split("/");
+    var strPage = "/" + arrUrl[arrUrl.length - 3] + "/" + arrUrl[arrUrl.length - 2] + "/";
+    $("a.link").each(function() {
+
+        if ($(this).attr("href") == strPage)
+        // alert($(this).attr("href")==strPage);
+            $(this).addClass("current_item");
+    });
+});
+//当文档加载完毕后设置左侧样式高度，折中做法
+$(window).load(function() {
+    var height = $("section#main").height();
+    var h1 = $(document).height();
+    var h = (height > h1) ? height : h1;
+    $("#sidebar").height(h);
+});
+</script>
+
+</html>

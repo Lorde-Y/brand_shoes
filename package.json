@@ -1,0 +1,14 @@
+{
+  "name": "yunlai-project",
+  "version": "0.1.0",
+  "author": "yangkai",
+  "devDependencies": {
+    "grunt": "0.4.2",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-less": "^0.11.4",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-htmlhint": "^0.4.1"
+  }
+}

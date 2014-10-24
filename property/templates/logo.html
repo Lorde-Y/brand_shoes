@@ -1,0 +1,91 @@
+{% extends "backend_base.html" %} {% block title1 %}品牌管理{% endblock %} {% block title2 %}品牌管理{% endblock %} {% block title3 %}品牌管理{% endblock %} {% block titleBase %}品牌管理{% endblock %} {% block titleBaseUrl %}color{% endblock %} 
+{% block style %}
+   <link rel="stylesheet" href="/static/css/farbtastic.css" type="text/css" />
+{% endblock %}
+{% block content %}
+<!-- 添加导航板块 开始 -->
+<section id="main" class="column">
+    <div class="clear"></div>
+
+    <article class="module width_full">
+        <form method="post" name="form"enctype="multipart/form-data">
+                {% csrf_token %}
+            <header>
+                <h3 class="tabs_involved">品牌管理</h3>
+                <ul class="tabs">
+                    <li><a href="#tab1">添加品牌</a>
+                    </li>
+                    <li id="logo-list"><a href="#tab2">品牌列表</a>
+                    </li>
+                </ul>
+            </header>
+
+            <div class="tab_container">
+                <div id="tab1" class="tab_content">
+
+                    <div class="module_content">
+                        <form action="" style="width: 400px;">
+                            <div class="form-item">
+                                <label for="name">&nbsp;品牌:</label>
+                                <input type="text" id="logo-name" name="name" placeholder="填写品牌名称"/>
+                            </div>
+                            <div class="form-item">
+                                <label for="color">logo:</label>
+                                <input type="file" name="logo" class="title" />
+                                <!-- <input type="text" id="color" name="color" value="#123456" /> -->
+                            </div>
+                            <!-- <div id="picker"></div> -->
+                        </form>
+                    </div>
+                    <div class="submit_link">
+                        <input type="submit" value="确定" class="alt_btn" />
+                    </div>
+                </div>
+                <!-- end of #tab1 -->
+                <div id="tab2" class="tab_content">
+                   
+                </div>
+                <!-- end of #tab2 -->
+
+            </div>
+            <!-- end of .tab_container -->
+
+            <footer>
+               
+            </footer>
+        </form>
+    </article>
+    <!-- end of content manager article -->
+    <div class="spacer"></div>
+</section>
+<!-- 添加导航板块 结束 -->
+
+<!-- 标题不能为空 开始 -->
+<script type="text/javascript" src="/static/js/tab_toggle.js"></script>
+<script type="text/javascript">
+$(function() {
+    $('.alt_btn').click(function() {
+        if ($.trim($("#logo-name").val()).length <= 0) {
+            alert('品牌名称不能为空');
+            return false;
+        } else {
+            form.action = "/backend/logo_add_handle/";
+        }
+    });
+    //点击发送ajax请求获取颜色列表
+    $('#logo-list').click(function(){
+        $.ajax({
+            type: 'POST',
+            url : '/backend/logo_list/',
+            data:{},
+            dataType:'HTML',
+            success:function(data){
+                $('#tab2').html('');
+                $('#tab2').append(data);
+            }
+        });
+    })
+});
+</script>
+<!-- 标题不能为空 结束 -->
+{% endblock %}

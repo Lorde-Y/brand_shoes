@@ -1,0 +1,23 @@
+ <table class="tablesorter" cellspacing="0">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>尺寸大小</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+   
+    <tbody>
+     {% for list in sizeList %} 
+        <tr>
+            <td>{{list.id}}</td>
+            <td>{{list.name}}</td>
+            <td>
+                <a href="/backend/del_size/?id={{list.id}}">
+                    删除
+                </a>
+            </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+</table>

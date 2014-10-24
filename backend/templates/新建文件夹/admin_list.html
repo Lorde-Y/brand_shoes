@@ -1,0 +1,97 @@
+{% extends "backend_base.html" %}
+
+{% block title1 %}管理员列表{% endblock %}
+{% block title2 %}管理员列表{% endblock %}
+{% block title3 %}管理员列表{% endblock %}
+{% block titleBase %}管理员列表{% endblock %}
+{% block titleBaseUrl %}admin_list{% endblock %}
+{% block content %}
+    <!-- 管理员列表 开始 -->
+    <section id="main" class="column">
+        <div class="clear"></div>
+        <article class="module width_full">
+            <div class="tab_container">
+                <div id="tab1" class="tab_content">
+                    <table class="tablesorter" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>账号</th>
+                                <th>管理员姓名</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        {% for list in adminlist %}
+                        <tbody>
+                            <tr>
+                                <td>{{list.username}}</td>
+                                <td>{{list.first_name}}</td>
+                                <td>
+                                    <a href="/backend/admin_edit/?id={{list.id}}">
+                                        <input type="image" src="/static/images/icn_edit.png" title="修改" />
+                                    </a>
+                                    {% if not list.is_superuser %}
+                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#deleteModal" name="delete" id="{{list.id}}_delete">
+                                        <input type="image" src="/static/images/icn_trash.png" title="删除" />
+                                    </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </article>
+        <div class="spacer"></div>
+    </section>
+    <!-- 管理员列表 结束 -->
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="padding-top:150px;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="border:0;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel" >
+                    请输入密码进行删除
+                    </h4>
+                </div>
+                <div style="border:0;">
+                    <input type="password" class="form-control" id="deletePassword" placeholder="请输入密码" style="width:95%;margin-left:2.5%;">
+                </div>
+                <div class="modal-footer" style="border:0;">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="delete">删除</button>
+                </div>
+            </div>
+            <form action="/backend/admin_delete/" method="post" id="hidden_form">
+                {% csrf_token %}
+                <input type="hidden" value="#" name="id_attr" />
+                <input type="hidden" value="#" name="delete_attr" />
+            </form>
+        </div>
+    </div>
+    <!-- /.modal -->
+
+    <!-- 密码输入确认框 开始 -->
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $("a[name='delete']").click(function(){
+            var deleteItem = $(this);
+            var deleteId = deleteItem.attr("id").substr(0, 1);
+            $('#deleteModal').modal('show');
+
+            // 删除确认
+            $('#delete').click(function(){
+                var deletePassword = $('#deletePassword').val();
+                if (deletePassword == "") return;
+                
+                $("input[name='id_attr']").val(deleteId);
+                $("input[name='delete_attr']").val(deletePassword);
+                document.getElementById('hidden_form').submit();
+            });
+        });
+    });
+    </script>
+    <!-- 密码输入确认框 结束 -->
+{% endblock %}

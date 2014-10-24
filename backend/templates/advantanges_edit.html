@@ -1,0 +1,63 @@
+{% extends "backend_base.html" %}
+
+{% block title1 %}修改产品优势{% endblock %}
+{% block title2 %}修改产品优势{% endblock %}
+{% block title3 %}修改产品优势{% endblock %}
+{% block titleBase %}产品优势管理{% endblock %}
+{% block titleBaseUrl %}advantanges_list{% endblock %}
+{% block content %}
+    <!-- 添加产品优势板块 开始 -->
+    <section id="main" class="column">
+        <div class="clear"></div>
+        <article class="module width_full add_item_block">
+            <form method="post" name="form">
+                <header>
+                    <h3 class="form_title">修改产品优势</h3>
+                </header>
+                <div class="module_content">
+                    <fieldset style="width:30%;clear:both;margin-bottom:20px;">
+                        <label>问题</label>
+                        <input type="text" name="name" class="title" style="height:25px;" value="">
+                    </fieldset>  
+                </div>
+                <div class="module_content">
+                    <fieldset style="width:40%;clear:both;margin-bottom:30px;">
+                        <label>回答1</label>
+                        <input type="text" name="name" class="title" style="height:25px;margin-bottom:10px;" value="">
+                        <label>回答2</label>
+                        <input type="text" name="name" class="title" style="height:25px;margin-bottom:10px;" value="">
+                        <label>回答3</label>
+                        <input type="text" name="name" class="title" style="height:25px;margin-bottom:10px;" value="">
+                        <label>回答4</label>
+                        <input type="text" name="name" class="title" style="height:25px;" value="">
+                    </fieldset>  
+                </div>
+                <div class="module_content">
+                    <fieldset style="width:30%;clear:both;">
+                        <label>问题（英文）</label>
+                        <input type="text" name="name_en" class="title" style="height:25px;" value="">
+                    </fieldset>  
+                </div>
+                <div class="module_content">
+                    <fieldset style="width:40%;clear:both;margin-bottom:30px;">
+                        <label>回答1（英文）</label>
+                        <input type="text" name="name" class="title" style="height:25px;margin-bottom:10px;" value="">
+                        <label>回答2（英文）</label>
+                        <input type="text" name="name" class="title" style="height:25px;margin-bottom:10px;" value="">
+                        <label>回答3（英文）</label>
+                        <input type="text" name="name" class="title" style="height:25px;margin-bottom:10px;" value="">
+                        <label>回答4（英文）</label>
+                        <input type="text" name="name" class="title" style="height:25px;" value="">
+                    </fieldset>  
+                </div>
+                <footer>
+                    <div class="submit_link">
+                        <input type="submit" value="修改" class="alt_btn" />
+                    </div>
+                </footer>
+            </form>
+        </article>
+        <div class="spacer"></div>
+    </section>
+    <!-- 添加产品优势板块 结束 -->
+{% endblock %}

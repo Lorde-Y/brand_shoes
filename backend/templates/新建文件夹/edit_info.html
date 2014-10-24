@@ -1,0 +1,115 @@
+{% extends "backend_base.html" %}
+
+{% block style %}
+    <!-- ueditor编辑器js与css -->
+    {{ form.media }}
+    {{ form_en.media }}
+{% endblock %}
+{% block title1 %}{{edit_type}}{% endblock %}
+{% block title2 %}{{edit_type}}{% endblock %}
+{% block title3 %}{{edit_type}}{% endblock %}
+{% block titleBase %}{{edit_type}}{% endblock %}
+{% block titleBaseUrl %}{{type}}_list{% endblock %}
+{% block content %}
+    <!-- 修改资讯板块 开始 -->
+    <section id="main" class="column">
+        <div class="clear"></div>
+        <article class="module width_full add_item_block">
+            <form method="post" name="form" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{new.id}}" />
+                <input type="hidden" name="type" value="{{type}}" />
+                <header>
+                    <h3 class="form_title">{{edit_type}}</h3>
+                </header>
+                <div class="module_content">
+                    <fieldset style="width:30%;float:left;margin-bottom:20px;">
+                        <label>标题</label>
+                        <input type="text" name="title" class="title" style="height:25px;" value="{{new.title}}">
+                    </fieldset>
+                    <fieldset style="width:30%;float:left;clear:both;margin-bottom:20px;">
+                        <label>描述</label>
+                        <input type="text" name="remark" class="title" style="height:25px;" value="{{new.remark}}">
+                    </fieldset>
+                    <fieldset style="width:30%;float:left;clear:both;margin-bottom:20px;">
+                        <label>封面图片</label>
+                        <input type="hidden" name="hiddenImg" value="{{new.img}}"/>
+                        <input type="file" name="img" class="title" style="display:none;" />
+                        <input type="button" value="上传图片" style="margin-left:-100px;" id="uploadBtn">
+                        {% if new.img != '' %}
+                        <img src="/media/{{new.img}}" alt="找不到图片" style="display:block;padding:10px;"/>
+                        {% endif %}
+                    </fieldset>
+                    <fieldset style="width:30%; float:left;clear:both;margin-bottom:20px;" 
+                    class="parentMenu">
+                        <label>类型选择</label>
+                        <select name="p_id" style="width:92%;height:25px;" class="contentsType" id="parentMenu">
+                            <option value="{{new.p_id}}">{{p_id_name}}</option>
+                        </select>                       
+                    </fieldset>
+                    <fieldset style="width:30%; float:left;margin-left:10px;margin-bottom:20px;" class="secondMenu">
+                        <label>类型选择</label>
+                        <select name="s_id" style="width:92%;height:25px;" class="contentsType" id="secondMenu">
+                            <option value="{{new.s_id}}">{{s_id_name}}</option>                    
+                        </select>                       
+                    </fieldset>
+                    {% if new.t_id != 0  %}
+                    <fieldset style="width:30%;float:left;margin-left:10px;margin-bottom:20px;" class="thirdMenu">
+                        <label>类型选择</label>
+                        <select name="t_id" style="width:92%;height:25px;" class="contentsType" id="thirdMenu">
+                            <option value="{{new.t_id}}">{{t_id_name}}</option>
+                        </select>                       
+                    </fieldset>
+                    {% endif %}
+                    <fieldset style="clear:both;margin-bottom:20px;">
+                        <label>内容</label>
+                        <div style="padding:0 10px;">{{ form }}</div>
+                    </fieldset>
+                    <fieldset style="width:30%;float:left;margin-bottom:20px;">
+                        <label>标题（英文版）</label>
+                        <input type="text" name="title_en" class="title" style="height:25px;" value="{{new.title_en}}">
+                    </fieldset>
+                    <fieldset style="width:30%;float:left;clear:both;margin-bottom:20px;">
+                        <label>描述（英文版）</label>
+                        <input type="text" name="remark_en" class="title" style="height:25px;" value="{{new.remark_en}}">
+                    </fieldset>
+                    <fieldset style="clear:both;margin-bottom:20px;">
+                        <label>内容（英文版）</label>
+                        <div style="padding:0 10px;">{{ form_en }}</div>
+                    </fieldset>
+                </div>
+                <footer>
+                    <div class="submit_link">
+                        <input type="submit" value="提交" class="alt_btn">
+                        <input type="button" value="清空" class="clear_btn">
+                    </div>
+                </footer>
+            </form>
+        </article>
+        <div class="spacer"></div>
+    </section>
+    <!-- 修改资讯板块 结束 -->
+
+    <!-- js 开始 -->
+    <script type="text/javascript" src="/static/js/add_info.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        // ueditor内容显示
+        var content = '{{ new.content|safe }}'
+        var ue = UE.getEditor('id_content');
+        ue.ready(function() {
+            ue.setContent(content);
+        });
+
+        var content_en = '{{ new.content_en|safe }}'
+        var ue_en = UE.getEditor('id_content_en');
+        ue_en.ready(function() {
+            ue_en.setContent(content_en);
+        });
+        
+        var url = "/backend/pro_add_handle/";
+        add_info(url);
+    });
+    </script>
+    <!-- js 结束 -->
+{% endblock %}

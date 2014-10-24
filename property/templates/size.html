@@ -1,0 +1,79 @@
+{% extends "backend_base.html" %} {% block title1 %}尺寸管理{% endblock %} {% block title2 %}尺寸管理{% endblock %} {% block title3 %}尺寸管理{% endblock %} {% block titleBase %}尺寸管理{% endblock %} {% block titleBaseUrl %}size{% endblock %} {% block content %}
+<!-- 添加导航板块 开始 -->
+<section id="main" class="column">
+    <div class="clear"></div>
+
+    <article class="module width_full">
+        <form method="post" name="form">
+            <header>
+                <h3 class="tabs_involved">尺寸管理</h3>
+                <ul class="tabs">
+                    <li><a href="#tab1">尺寸添加</a>
+                    </li>
+                    <li id="size-list"><a href="#tab2">尺寸列表</a>
+                    </li>
+                </ul>
+            </header>
+
+            <div class="tab_container">
+                <div id="tab1" class="tab_content">
+
+                    <div class="module_content">
+                        <fieldset style="width:30%;clear:both; margin-bottom:50px;margin-top:50px">
+                            <label>尺寸大小</label>
+                            <input type="text" name="name" class="title" style="height:25px;" placeholder="请输入数字">
+                        </fieldset>
+                    </div>
+                     <div class="submit_link">
+                        <input type="submit" value="确定" class="alt_btn" />
+                    </div>
+                </div>
+                <!-- end of #tab1 -->
+                <div id="tab2" class="tab_content">
+                    
+                </div>
+                <!-- end of #tab2 -->
+
+            </div>
+            <!-- end of .tab_container -->
+
+            <footer>
+               
+            </footer>
+        </form>
+    </article>
+    <!-- end of content manager article -->
+    <div class="spacer"></div>
+</section>
+<!-- 添加导航板块 结束 -->
+
+<!-- 标题不能为空 开始 -->
+<script type="text/javascript" src="/static/js/tab_toggle.js"></script>
+<script type="text/javascript">
+$(function() {
+    $('.alt_btn').click(function() {
+        if ($.trim($(".title").val()).length <= 0) {
+            alert('内容不能为空');
+            return false;
+        } else {
+            form.action = "/backend/size_add_handle/";
+        }
+    });
+
+    //点击发送ajax请求获取尺寸列表
+    $('#size-list').click(function(){
+        $.ajax({
+            type: 'POST',
+            url : '/backend/size_list/',
+            data:{},
+            dataType:'HTML',
+            success:function(data){
+                $('#tab2').html('');
+                $('#tab2').append(data);
+            }
+        });
+    })
+});
+</script>
+<!-- 标题不能为空 结束 -->
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends "backend_base.html" %} {% block title1 %}颜色管理{% endblock %} {% block title2 %}颜色管理{% endblock %} {% block title3 %}颜色管理{% endblock %} {% block titleBase %}颜色管理{% endblock %} {% block titleBaseUrl %}color{% endblock %} 
+{% block style %}
+   <link rel="stylesheet" href="/static/css/farbtastic.css" type="text/css" />
+{% endblock %}
+{% block content %}
+<!-- 添加导航板块 开始 -->
+<section id="main" class="column">
+    <div class="clear"></div>
+
+    <article class="module width_full">
+        <form method="post" name="form">
+            <header>
+                <h3 class="tabs_involved">颜色管理</h3>
+                <ul class="tabs">
+                    <li><a href="#tab1">添加颜色</a>
+                    </li>
+                    <li id="color-list"><a href="#tab2">颜色列表</a>
+                    </li>
+                </ul>
+            </header>
+
+            <div class="tab_container">
+                <div id="tab1" class="tab_content">
+
+                    <div class="module_content">
+                        <form action="" style="width: 400px;">
+                            <div class="form-item">
+                                <label for="name">名称:</label>
+                                <input type="text" id="color-name" name="name" placeholder="填写中文名称"/>
+                            </div>
+                            <div class="form-item">
+                                <label for="color">颜色:</label>
+                                <input type="text" id="color" name="color" value="#123456" />
+                            </div>
+                            <div id="picker"></div>
+                        </form>
+                    </div>
+                    <div class="submit_link">
+                        <input type="submit" value="确定" class="alt_btn" />
+                    </div>
+                </div>
+                <!-- end of #tab1 -->
+                <div id="tab2" class="tab_content">
+                   
+                </div>
+                <!-- end of #tab2 -->
+
+            </div>
+            <!-- end of .tab_container -->
+
+            <footer>
+               
+            </footer>
+        </form>
+    </article>
+    <!-- end of content manager article -->
+    <div class="spacer"></div>
+</section>
+<!-- 添加导航板块 结束 -->
+
+<!-- 标题不能为空 开始 -->
+ <script type="text/javascript" src="/static/js/farbtastic.js"></script>
+<script type="text/javascript" src="/static/js/tab_toggle.js"></script>
+<script type="text/javascript">
+$(function() {
+    $('#demo').hide();
+    $('#picker').farbtastic('#color');
+    $('.alt_btn').click(function() {
+        if ($.trim($("#color-name").val()).length <= 0) {
+            alert('颜色不能为空');
+            return false;
+        } else {
+            form.action = "/backend/color_add_handle/";
+        }
+    });
+    //点击发送ajax请求获取颜色列表
+    $('#color-list').click(function(){
+        $.ajax({
+            type: 'POST',
+            url : '/backend/color_list/',
+            data:{},
+            dataType:'HTML',
+            success:function(data){
+                $('#tab2').html('');
+                $('#tab2').append(data);
+            }
+        });
+    })
+});
+</script>
+<!-- 标题不能为空 结束 -->
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends "backend_base.html" %}
+ 
+{% block title1 %}佳易得产品列表{% endblock %}
+{% block title2 %}佳易得产品列表{% endblock %}
+{% block title3 %}佳易得产品列表{% endblock %}
+{% block titleBase %}产品管理{% endblock %}
+{% block titleBaseUrl %}product_list{% endblock %}
+{% block content %}
+    <!-- 佳易得产品列表板块 开始 -->
+    <section id="main" class="column">
+        <div class="clear"></div>
+        <article class="module width_full">
+            <div class="tab_container">
+                <div id="tab1" class="tab_content">
+                    <table class="tablesorter" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>标题</th>
+                                <th>所属类型</th>
+                                <th>英文版面</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead> 
+                        {% for list in data %}
+                        <tbody>
+                            <tr>
+                                <td>{{list.news.title}}</td>
+                                <td>
+                                {% if list.navs.t_name %}
+                                 {{list.navs.p_name}}-{{list.navs.s_name}}-{{list.navs.t_name}}
+                                {% elif list.navs.s_name %}
+                                     {{list.navs.p_name}}-{{list.navs.s_name}}
+                                {% else%}
+                                     {{list.navs.p_name}}
+                                {% endif %}
+                                </td>
+                                {% if list.news.content_en %}
+                                    <td>是</td>
+                                {% else %}
+                                    <td>否</td>
+                                {% endif %}
+                                <td>{{list.news.datetime | date:"Y-m-d H:i:s"}}</td>
+                                <td>
+                                    <a href="/backend/edit_info/?type=product&id={{list.news.id}}">
+                                        <input type="image" src="/static/images/icn_edit.png" title="编辑" />
+                                    </a>
+                                    <a href="javascript:void(0);" click_action="/backend/所属类型del_info/?type=product&id={{list.news.id}}" name="delete">
+                                        <input type="image" src="/static/images/icn_trash.png" title="回收" />
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+
+        </article>
+       <!--中文分页显示 -->
+        <ul class="pagination">
+            <li>
+                <a href="/backend/product_list/?page={{public_pages.prevpage}}&currentpage={{public_pages.currentpage}}">上一页</a>
+            </li>
+            {% for page in public_pages.page_list %} {% if page == public_pages.currentpage %}
+            <li class="active">
+                <a href="/backend/product_list/?page={{page}}&currentpage={{public_pages.currentpage}}">{{page}}</a>
+            </li>
+            {% else %}
+            <li>
+                <a href="/backend/product_list/?page={{page}}&currentpage={{public_pages.currentpage}}">{{page}}</a>
+            </li>
+            {%endif%} {% endfor %}
+            <li>
+                <a href="/backend/product_list/?page={{public_pages.nextpage}}&currentpage={{public_pages.currentpage}}">下一页</a>
+            </li>
+        </ul>
+        <!-- 中文分页显示结束 -->
+        <div class="spacer"></div>
+    </section>
+    <!-- 佳易得产品列表板块 结束 -->
+
+    <!-- 模态框（Modal）开始 -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="padding-top:150px;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="border:0;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div style="border:0;padding-left:20px;">
+                    <h3>
+                    确认删除？
+                    </h3>
+                </div>
+                <div class="modal-footer" style="border:0;">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="delete">删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 模态框（Modal）结束 -->
+
+    <!-- 删除确认框 开始 -->
+    <script type="text/javascript" src="/static/js/del_info.js"></script>
+    <!-- 删除确认框 结束 -->
+{% endblock %}

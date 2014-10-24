@@ -1,0 +1,39 @@
+                    {% if product_nav %}
+                    <fieldset style="width:30%; float:left;clear:both;margin-bottom:20px;" 
+                    class="parentMenu">
+                        <label>类型选择</label>
+                        <select name="p_id" style="width:92%;height:25px;" class="contentsType" id="parentMenu">
+                            {% for list in product_nav %}
+                            <option value="{{list.id}}" 
+                            {% ifequal list.id Pid %} selected  {% endifequal %}>
+
+                               {{list.name}}
+                            </option>
+                             {% endfor %}
+                        </select>                       
+                    </fieldset>
+                    {% endif %}
+
+                    {% if product_second_nav %}
+                    <fieldset style="width:30%; float:left;margin-left:10px;margin-bottom:20px;" class="secondMenu">
+                        <label>类型选择</label>
+                        <select name="s_id" style="width:92%;height:25px;" class="contentsType" id="secondMenu">
+                             {% for list in product_second_nav %}
+                            <option value="{{list.id}}"  {% ifequal list.id Sid %} selected  {% endifequal %}>
+                            {{list.name}}
+                            </option>
+                             {% endfor %}                           
+                        </select>                       
+                    </fieldset>
+                    {% endif %}
+
+                    {% if product_third_nav %}
+                    <fieldset style="width:30%;float:left;margin-left:10px;margin-bottom:20px;" class="thirdMenu">
+                        <label>类型选择</label>
+                        <select name="t_id" style="width:92%;height:25px;" class="contentsType" id="thirdMenu">
+                             {% for list in product_third_nav %}
+                            <option value="{{list.id}}">{{list.name}}</option>
+                             {% endfor %} 
+                        </select>                       
+                    </fieldset>
+                    {% endif %}

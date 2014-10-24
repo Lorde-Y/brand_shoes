@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="googlebot" content="后台登录">
+
+    <!-- Title -->
+    <title>账户登录|后台管理</title>
+    <link href="/static/css/login_main.css" rel="stylesheet">
+    <script type="text/javascript" src="/static/js/toast.js"></script>
+</head>
+
+<body class="sign-in-up" id="to-top">
+
+    <!-- Sign In/Sign Up section -->
+    <section class="sign-in-up-section">
+        <div class="container">
+
+            <section class="sign-in-up-content">
+
+                <div class="row">
+
+                    <div class="col-md-12">
+
+                        <h4 class="text-center">后台登陆</h4>
+                        {% if form.errors %}
+                            <p style="color: red;">
+                                <strong>对不起，登陆失败</strong>
+                            </p>
+                        {%endif %}
+                        <form class="sign-in-up-form" role="form" method="post" id="login_form" action="/backend/check_login/">
+                            {% csrf_token %}
+                            <!-- Input 1 -->
+                            <div class="form-group">
+                                <input class="form-control" id="InputUsername" type="text" placeholder="用户名" name="username">
+                            </div>
+                            <!-- /.form-group -->
+
+                            <!-- Input 2 -->
+                            <div class="form-group">
+                                <input class="form-control" id="InputPassword" type="password" placeholder="密码" name="password">
+                            </div>
+                            <!-- /.form-group -->
+                            <!-- Button -->
+                            <input class="btn btn-success btn-block" type="submit" value="登录" />
+                            <!-- Sign In/Sign Up links -->
+                            <section class="sign-in-up-links text-center">
+
+                                 <p style="color: red;">
+                                   <strong>{{form.errors.username}}</strong>
+                                 </p>
+                            </section>
+                            <!-- /.sign-in-up-links -->
+
+                        </form>
+                        <!-- /.sign-in-up-form -->
+
+                    </div>
+                    <!-- /.col-md-12 -->
+
+                </div>
+                <!-- /.row -->
+
+            </section>
+            <!-- /.sign-in-up-content -->
+
+
+
+
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    <section class="footer-copyright text-center">
+
+                        <p>Copyright &copy; 2014 深圳德厚科技有限公司</p>
+
+                    </section>
+                    <!-- /.footer-section -->
+
+                </div>
+                <!-- /.col-md-12 -->
+
+            </div>
+            <!-- /.row -->
+
+        </div>
+        <!-- /.container -->
+
+    </section>
+    <!-- /.sign-in-up-section -->
+</body>
+
+
+</html>

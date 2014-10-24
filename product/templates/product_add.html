@@ -1,0 +1,182 @@
+{% extends "backend_base.html" %} 
+{% block style %}
+<!-- ueditor编辑器js与css -->
+{{ form.media }}
+{% endblock %}
+ {% block title1 %}添加商品{% endblock %} 
+ {% block title2 %}添加商品{% endblock %} 
+ {% block title3 %}添加商品{% endblock %} 
+ {% block titleBase %}商品管理{% endblock %} 
+ {% block titleBaseUrl %}product_list{% endblock %}
+  {% block content %}
+<!-- 添加商品板块 开始 -->
+<section id="main" class="column">
+    <div class="clear"></div>
+
+    <article class="module width_full">
+        <form method="post" name="form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <header>
+                <h3 class="tabs_involved">添加商品</h3>
+                <ul class="tabs">
+                    <li><a href="#tab1">中文产品</a>
+                    </li>
+                    <li><a href="#tab2">英文产品</a>
+                    </li>
+                </ul>
+            </header>
+
+            <div class="tab_container">
+                <div id="tab1" class="tab_content">
+                    <div id="selectOption">
+                     {% if product_nav %}
+                    <fieldset style="width:30%; float:left;clear:both;margin-bottom:20px;" 
+                    class="parentMenu">
+                        <label>类型选择</label>
+                        <select name="p_id" style="width:92%;height:25px;" class="contentsType" id="parentMenu">
+                            {% for list in product_nav %}
+                            <option value="{{list.id}}">{{list.name}}</option>
+                             {% endfor %}
+                        </select>                       
+                    </fieldset>
+                    {% endif %}
+
+                    {% if product_second_nav %}
+                    <fieldset style="width:30%; float:left;margin-left:10px;margin-bottom:20px;" class="secondMenu">
+                        <label>类型选择</label>
+                        <select name="s_id" style="width:92%;height:25px;" class="contentsType" id="secondMenu">
+                             {% for list in product_second_nav %}
+                            <option value="{{list.id}}">{{list.name}}</option>
+                             {% endfor %}                           
+                        </select>                       
+                    </fieldset>
+                    {% endif %}
+
+                    {% if product_third_nav %}
+                    <fieldset style="width:30%;float:left;margin-left:10px;margin-bottom:20px;" class="thirdMenu">
+                        <label>类型选择</label>
+                        <select name="t_id" style="width:92%;height:25px;" class="contentsType" id="thirdMenu">
+                             {% for list in product_third_nav %}
+                            <option value="{{list.id}}">{{list.name}}</option>
+                             {% endfor %} 
+                        </select>                       
+                    </fieldset>
+                    {% endif %}
+
+                    </div>
+                    <div style="clear:both"></div>
+                    <fieldset style="width:30%;float:left;margin:10px;">
+                        <label>商品名称</label>
+                        <input type="text" name="name" class="title" style="height:25px;">
+                    </fieldset>
+                    <fieldset style="width:30%;float:left;clear:both;margin:10px;">
+                        <label>商品图片</label>
+                        <input type="file" name="photo" class="title" />
+                        <!-- <input type="button" value="上传图片" style="margin-left:-100px;" id="uploadBtn"> -->
+                    </fieldset>
+                    <fieldset style="width:30%;float:left;clear:both;margin:10px;">
+                        <label>商品价格</label>
+                        <input type="text" name="price" class="title" style="width:80%;height:25px;">
+                        <span style="float:left">元</span>
+                    </fieldset>
+                    <fieldset style="width:30%;float:left;clear:both;margin:10px;">
+                        <label>商品关键字</label>
+                        <input type="text" name="key_words" class="title" style="width:80%;height:25px;">
+                    </fieldset>
+                     <fieldset style="width:50%;clear:both;margin-bottom:20px;">
+                        <label>商品状态选择</label><br>
+                        <div style="float:left;margin:0 10px;">
+                            <input type="checkbox" name="is_new" class="title" value="True">最新&nbsp;
+                            <input type="checkbox" name="is_hot" class="title" value="True">热销
+                        </div>
+                    </fieldset>
+                    <fieldset style="width:50%;clear:both;margin-bottom:20px;">
+                        <label>商品品牌选择</label><br>
+                        <div style="float:left;margin:0 10px;">
+                            {% for list in brands %}
+                            <input type="radio" name="brands" class="title" value="{{list.name}}">{{list.name}}&nbsp;
+                            {% endfor %}
+                        </div>
+                    </fieldset>
+                    <fieldset style="width:50%;clear:both;margin-bottom:20px;">
+                        <label>商品颜色选择</label><br>
+                        <div style="float:left;margin:0 10px;">
+                            {% for list in color %}
+                            <input type="checkbox" name="color" class="title" value="{{list.name}}">{{list.name}}&nbsp;
+                            {% endfor %}
+                        </div>
+                    </fieldset>
+                    <fieldset style="width:50%;clear:both;margin-bottom:20px;">
+                        <label>商品尺寸选择</label><br>
+                        <div style="float:left;margin:0 10px;">
+                            {% for list in size %}
+                            <input type="checkbox" name="size" class="title" value="{{list.name}}">{{list.name}}&nbsp;
+                            {% endfor %}
+                        </div>
+                    </fieldset>
+
+                    
+                    <fieldset style="clear:both;margin:10px;">
+                        <label>内容</label>
+                        <div style="padding:0 10px;">{{ form }}</div>
+                    </fieldset>
+                </div>
+                <!-- 中文tab结束 -->
+                <div id="tab2" class="tab_content">
+                    <!-- <fieldset style="width:30%;float:left;margin:10px;">
+                        <label>标题（英文版）</label>
+                        <input type="text" name="title_en" class="title" style="height:25px;">
+                    </fieldset>
+                    <fieldset style="width:30%;float:left;clear:both;margin:10px;">
+                        <label>产品描述（英文版）</label>
+                        <input type="text" name="remark_en" class="title" style="height:25px;">
+                    </fieldset>
+                    <fieldset style="width:30%;float:left;clear:both;margin:10px;">
+                        <label>页面标题（英文版）</label>
+                        <input type="text" name="page_title_en" class="title" style="height:25px;">
+                    </fieldset>
+                    <fieldset style="width:30%;float:left;clear:both;margin:10px;">
+                        <label>页面关键字（英文版）</label>
+                        <input type="text" name="page_keywords_en" class="title" style="height:25px;">
+                    </fieldset>
+                    <fieldset style="width:30%;float:left;clear:both;margin:10px;">
+                        <label>页面描述（英文版）</label>
+                        <input type="text" name="page_description_en" class="title" style="height:25px;">
+                    </fieldset>
+                    <fieldset style="width:30%;float:left;clear:both;margin:10px;">
+                        <label>信息跳转页面（英文版）</label>
+                        <input type="text" name="url_en" class="title" style="height:25px;">
+                    </fieldset>
+                    <fieldset style="clear:both;margin:10px;">
+                        <label>内容（英文版）</label>
+                        <div style="padding:0 10px;">{{ form_en }}</div>
+                    </fieldset> -->
+                </div>
+                <!-- 英文tab结束 -->
+
+            </div>
+            <!-- end of .tab_container -->
+            <footer>
+                <div class="submit_link">
+                    <input type="submit" value="提交" class="alt_btn">
+                    <input type="button" value="清空" class="clear_btn">
+                </div>
+            </footer>
+        </form>
+    </article>
+    <div class="spacer"></div>
+</section>
+<!-- 添加商品板块 结束 -->
+
+<!-- js 开始 -->
+<script type="text/javascript" src="/static/js/add_info.js"></script>
+<script type="text/javascript" src="/static/js/tab_toggle.js"></script>
+<script type="text/javascript" src="/static/js/product.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    var url = "/backend/product_add_handle/";
+    add_info(url);
+});
+</script>
+<!-- js 结束 -->
+{% endblock %}
